@@ -22,11 +22,13 @@ function main(common) {
     function create_pin(pin) {
         const area = app.querySelector('div.ytp-right-controls');
         const panel = app.querySelector('div.ytp-chrome-bottom');
+        const gradient = app.querySelector('div.ytp-gradient-bottom');
 
         const button = document.createElement('button');
         button.classList.add('_pin_bottom_button', 'ytp-button');
         if (pin) {
-            panel.classList.add('_pin_bottom');
+            panel.classList.add('_pin_bottom_button_on');
+            gradient.classList.add('_pin_bottom_button_on');
             button.classList.add('_pin_bottom_button_on');
         }
         button.pin = pin;
@@ -35,11 +37,13 @@ function main(common) {
 
         button.addEventListener('click', () => {
             if (button.pin) {
-                panel.classList.remove('_pin_bottom');
+                panel.classList.remove('_pin_bottom_button_on');
+                gradient.classList.remove('_pin_bottom_button_on');
                 button.classList.remove('_pin_bottom_button_on');
                 button.pin = false;
             } else {
-                panel.classList.add('_pin_bottom');
+                panel.classList.add('_pin_bottom_button_on');
+                gradient.classList.add('_pin_bottom_button_on');
                 button.classList.add('_pin_bottom_button_on');
                 button.pin = true;
             }

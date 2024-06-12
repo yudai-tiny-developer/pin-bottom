@@ -1,11 +1,16 @@
-div.ytp-chrome-bottom._pin_bottom {
-    opacity: 1 !important;
-}
-
 button._pin_bottom_button {
     fill: white;
 }
 
 button._pin_bottom_button._pin_bottom_button_on {
     fill: #ff8983 !important;
+}
+
+div.ytp-chrome-bottom._pin_bottom_button_on {
+    opacity: 1 !important;
+}
+
+div.ytp-gradient-bottom._pin_bottom_button_on {
+    display: block !important;
+    opacity: 1 !important;
 }
