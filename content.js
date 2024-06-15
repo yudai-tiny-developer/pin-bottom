@@ -23,6 +23,7 @@ function main(common) {
         const area = app.querySelector('div.ytp-right-controls');
         const panel = app.querySelector('div.ytp-chrome-bottom');
         const gradient = app.querySelector('div.ytp-gradient-bottom');
+        const heat = app.querySelector('div.ytp-heat-map-container');
         const player = app.querySelector('div#movie_player');
 
         const button = document.createElement('button');
@@ -37,6 +38,7 @@ function main(common) {
 
             panel.classList.add('_pin_bottom_button_on');
             gradient.classList.add('_pin_bottom_button_on');
+            heat.classList.add('_pin_bottom_button_on');
             button.classList.add('_pin_bottom_button_on');
 
             clearInterval(button.pin_id);
@@ -50,6 +52,7 @@ function main(common) {
 
             panel.classList.remove('_pin_bottom_button_on');
             gradient.classList.remove('_pin_bottom_button_on');
+            heat.classList.remove('_pin_bottom_button_on');
             button.classList.remove('_pin_bottom_button_on');
 
             clearInterval(button.pin_id);
