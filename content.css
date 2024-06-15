@@ -14,3 +14,8 @@ div.ytp-gradient-bottom._pin_bottom_button_on {
     display: block !important;
     opacity: 1 !important;
 }
+
+div.ytp-heat-map-container._pin_bottom_button_on {
+    display: block !important;
+    opacity: 1 !important;
+}
