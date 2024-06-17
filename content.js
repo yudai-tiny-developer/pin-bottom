@@ -22,7 +22,8 @@ function main(common) {
     function create_pin(pin) {
         const area = app.querySelector('div.ytp-right-controls');
         const panel = app.querySelector('div.ytp-chrome-bottom');
-        const gradient = app.querySelector('div.ytp-gradient-bottom');
+        const gradient_top = app.querySelector('div.ytp-gradient-top');
+        const gradient_bottom = app.querySelector('div.ytp-gradient-bottom');
         const heat = app.querySelector('div.ytp-heat-map-container');
         const player = app.querySelector('div#movie_player');
 
@@ -37,7 +38,8 @@ function main(common) {
             button.pin = true;
 
             panel.classList.add('_pin_bottom_button_on');
-            gradient.classList.add('_pin_bottom_button_on');
+            gradient_top.classList.add('_pin_bottom_button_on');
+            gradient_bottom.classList.add('_pin_bottom_button_on');
             heat.classList.add('_pin_bottom_button_on');
             button.classList.add('_pin_bottom_button_on');
 
@@ -51,7 +53,8 @@ function main(common) {
             button.pin = false;
 
             panel.classList.remove('_pin_bottom_button_on');
-            gradient.classList.remove('_pin_bottom_button_on');
+            gradient_top.classList.remove('_pin_bottom_button_on');
+            gradient_bottom.classList.remove('_pin_bottom_button_on');
             heat.classList.remove('_pin_bottom_button_on');
             button.classList.remove('_pin_bottom_button_on');
 
