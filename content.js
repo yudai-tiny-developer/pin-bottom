@@ -1,19 +1,10 @@
-const app = document.querySelector('ytd-app');
-if (app) {
-    import(chrome.runtime.getURL('common.js')).then(common => {
-        main(common);
-    });
-}
+const app = document.querySelector('ytd-app') ?? document.body;
+import(chrome.runtime.getURL('common.js')).then(common => {
+    main(common);
+});
 
 function main(common) {
-    new MutationObserver((mutations, observer) => {
-        if (app.querySelector('span.ytp-volume-area')) {
-            observer.disconnect();
-            apply_settings();
-        }
-    }).observe(app, { childList: true, subtree: true });
-
-    function apply_settings() {
+    function loadSettings() {
         chrome.storage.local.get(common.storage, data => {
             create_pin(data.pin ?? common.default_pin);
         });
@@ -72,4 +63,12 @@ function main(common) {
 
         area.appendChild(button);
     }
+
+    new MutationObserver((mutations, observer) => {
+        if (app.querySelector('span.ytp-volume-area')) {
+            observer.disconnect();
+            loadSettings();
+        }
+    }).observe(app, { childList: true, subtree: true });
+
 }
