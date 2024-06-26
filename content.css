@@ -1,9 +1,9 @@
 button._pin_bottom_button {
-    fill: var(--yt-spec-text-primary) !important;
+    fill: #eee !important;
 }
 
 button._pin_bottom_button._pin_bottom_button_on {
-    fill: var(--yt-spec-red-30) !important;
+    fill: #ff8983 !important;
 }
 
 div.ytp-chrome-bottom._pin_bottom_button_on {
