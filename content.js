@@ -31,12 +31,12 @@ function main(common) {
             button.pin = true;
 
             button.classList.add('_pin_bottom_button_on');
-            panel_top.classList.add('_pin_bottom_button_on');
-            gradient_top.classList.add('_pin_bottom_button_on');
-            panel_bottom.classList.add('_pin_bottom_button_on');
-            gradient_bottom.classList.add('_pin_bottom_button_on');
-            heatmap.classList.add('_pin_bottom_button_on');
-            fullerscreen_edu.classList.add('_pin_bottom_button_on');
+            panel_top?.classList.add('_pin_bottom_button_on');
+            gradient_top?.classList.add('_pin_bottom_button_on');
+            panel_bottom?.classList.add('_pin_bottom_button_on');
+            gradient_bottom?.classList.add('_pin_bottom_button_on');
+            heatmap?.classList.add('_pin_bottom_button_on');
+            fullerscreen_edu?.classList.add('_pin_bottom_button_on');
 
             clearInterval(button.pin_id);
             button.pin_id = setInterval(() => {
@@ -48,12 +48,12 @@ function main(common) {
             button.pin = false;
 
             button.classList.remove('_pin_bottom_button_on');
-            panel_top.classList.remove('_pin_bottom_button_on');
-            gradient_top.classList.remove('_pin_bottom_button_on');
-            panel_bottom.classList.remove('_pin_bottom_button_on');
-            gradient_bottom.classList.remove('_pin_bottom_button_on');
-            heatmap.classList.remove('_pin_bottom_button_on');
-            fullerscreen_edu.classList.remove('_pin_bottom_button_on');
+            panel_top?.classList.remove('_pin_bottom_button_on');
+            gradient_top?.classList.remove('_pin_bottom_button_on');
+            panel_bottom?.classList.remove('_pin_bottom_button_on');
+            gradient_bottom?.classList.remove('_pin_bottom_button_on');
+            heatmap?.classList.remove('_pin_bottom_button_on');
+            fullerscreen_edu?.classList.remove('_pin_bottom_button_on');
 
             clearInterval(button.pin_id);
         }
