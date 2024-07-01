@@ -1,7 +1,10 @@
 const app = document.querySelector('ytd-app') ?? document.body;
-import(chrome.runtime.getURL('common.js')).then(common => {
-    main(common);
-});
+
+if (!window.location.href.startsWith('https://www.youtube.com/live_chat?')) {
+    import(chrome.runtime.getURL('common.js')).then(common => {
+        main(common);
+    });
+}
 
 function main(common) {
     function loadSettings() {
