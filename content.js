@@ -72,7 +72,7 @@ function main(app, common) {
     }
 
     new MutationObserver((mutations, observer) => {
-        if (app.querySelector('span.ytp-volume-area')) {
+        if (app.querySelector('div.ytp-right-controls')) {
             observer.disconnect();
             loadSettings();
         }
