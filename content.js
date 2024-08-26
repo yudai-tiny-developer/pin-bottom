@@ -73,7 +73,6 @@ function main(app, common) {
 
     new MutationObserver((mutations, observer) => {
         if (app.querySelector('div.ytp-right-controls')) {
-            observer.disconnect();
             loadSettings();
         }
     }).observe(app, { childList: true, subtree: true });
