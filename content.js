@@ -5,9 +5,20 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 });
 
 function main(app, common) {
+    let cache;
+
+    function update() {
+        if (cache) {
+            create_pin(cache.pin ?? common.default_pin);
+        } else {
+            loadSettings();
+        }
+    }
+
     function loadSettings() {
         chrome.storage.local.get(common.storage, data => {
-            create_pin(data.pin ?? common.default_pin);
+            cache = data;
+            update();
         });
     }
 
@@ -75,7 +86,9 @@ function main(app, common) {
 
     new MutationObserver((mutations, observer) => {
         if (app.querySelector('div.ytp-right-controls')) {
-            loadSettings();
+            update();
         }
     }).observe(app, { childList: true, subtree: true });
+
+    loadSettings();
 }
