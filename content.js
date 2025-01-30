@@ -80,13 +80,23 @@ function main(app, common) {
                     chrome.storage.local.set({ pin: button.pin });
                 });
 
+                shortcut_command = () => {
+                    button.pin ? off() : on();
+                    chrome.storage.local.set({ pin: button.pin });
+                };
+
                 controls.appendChild(button);
             }
         }
     }
 
     let settings;
+    let shortcut_command;
 
     loadSettings();
     new MutationObserver(() => applySettings()).observe(app, { childList: true, subtree: true });
+
+    chrome.runtime.onMessage.addListener(() => {
+        shortcut_command();
+    });
 }
