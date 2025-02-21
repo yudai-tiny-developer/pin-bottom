@@ -6,17 +6,17 @@ button._pin_bottom_button._pin_bottom_button_on {
     fill: #ff8983 !important;
 }
 
-div.ytp-chrome-bottom._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls) div.ytp-chrome-bottom._pin_bottom_button_on {
     display: block !important;
     opacity: 1 !important;
 }
 
-div.ytp-gradient-bottom._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-bottom._pin_bottom_button_on {
     display: block !important;
     opacity: 1 !important;
 }
 
-div.ytp-heat-map-container._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls) div.ytp-heat-map-container._pin_bottom_button_on {
     display: block !important;
     opacity: 1 !important;
 }
