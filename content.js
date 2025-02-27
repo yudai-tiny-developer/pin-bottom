@@ -8,11 +8,11 @@ function main(app, common) {
     function loadSettings() {
         chrome.storage.local.get(common.storage, data => {
             settings = data;
-            update_pin();
+            update_button();
         });
     }
 
-    function update_pin() {
+    function update_button() {
         if (settings) {
             settings.pin ?? common.default_pin ? on() : off();
         }
@@ -117,16 +117,11 @@ function main(app, common) {
             return false;
         }
 
-        fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
-        if (!fullerscreen_edu) {
-            return false;
-        }
-
         clearInterval(detect_interval);
 
         mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
         mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
-
+        fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
         loadSettings();
