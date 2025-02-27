@@ -125,5 +125,5 @@ function main(app, common) {
         area.appendChild(pin_button);
 
         loadSettings();
-    }, 200);
+    }, 1000);
 }
