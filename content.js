@@ -82,7 +82,6 @@ function main(app, common) {
     chrome.runtime.onMessage.addListener(shortcut_command);
 
     const detect_interval = setInterval(() => {
-        console.log('setInterval');
         player = app.querySelector('div#movie_player');
         if (!player) {
             return false;
@@ -122,7 +121,7 @@ function main(app, common) {
         if (!fullerscreen_edu) {
             return false;
         }
-        console.log('detected');
+
         clearInterval(detect_interval);
 
         mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
