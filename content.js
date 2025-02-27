@@ -7,14 +7,21 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 function main(app, common) {
     function loadSettings() {
         chrome.storage.local.get(common.storage, data => {
-            data.pin ?? common.default_pin ? on() : off();
+            settings = data;
+            update_pin();
         });
+    }
+
+    function update_pin() {
+        if (settings) {
+            settings.pin ?? common.default_pin ? on() : off();
+        }
     }
 
     function on() {
         pin = true;
 
-        button.classList.add('_pin_bottom_button_on');
+        pin_button.classList.add('_pin_bottom_button_on');
         panel_top?.classList.add('_pin_bottom_button_on');
         gradient_top?.classList.add('_pin_bottom_button_on');
         panel_bottom?.classList.add('_pin_bottom_button_on');
@@ -25,14 +32,14 @@ function main(app, common) {
         clearInterval(pin_interval);
 
         pin_interval = setInterval(() => {
-            player.dispatchEvent((button.mousemove_event_toggle = !button.mousemove_event_toggle) ? mousemove0 : mousemove1);
+            player.dispatchEvent((mousemove_event_toggle = !mousemove_event_toggle) ? mousemove0 : mousemove1);
         }, 1000);
     }
 
     function off() {
         pin = false;
 
-        button.classList.remove('_pin_bottom_button_on');
+        pin_button.classList.remove('_pin_bottom_button_on');
         panel_top?.classList.remove('_pin_bottom_button_on');
         gradient_top?.classList.remove('_pin_bottom_button_on');
         panel_bottom?.classList.remove('_pin_bottom_button_on');
@@ -43,18 +50,23 @@ function main(app, common) {
         clearInterval(pin_interval);
     }
 
+    function create_button() {
+        const button = document.createElement('button');
+        button.classList.add('_pin_bottom_button', 'ytp-button');
+        button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
+        button.addEventListener('click', shortcut_command);
+        return button;
+    }
+
     const shortcut_command = () => {
         pin ? off() : on();
         chrome.storage.local.set({ pin: pin });
     };
 
-    const button = document.createElement('button');
-    button.classList.add('_pin_bottom_button', 'ytp-button');
-    button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
-    button.addEventListener('click', shortcut_command);
+    const pin_button = create_button();
 
+    let settings;
     let player;
-    let area;
     let panel_top;
     let gradient_top;
     let panel_bottom;
@@ -65,16 +77,18 @@ function main(app, common) {
     let mousemove1;
     let pin;
     let pin_interval;
+    let mousemove_event_toggle;
 
     chrome.runtime.onMessage.addListener(shortcut_command);
 
     const detect_interval = setInterval(() => {
+        console.log('setInterval');
         player = app.querySelector('div#movie_player');
         if (!player) {
             return false;
         }
 
-        area = player.querySelector('div.ytp-right-controls');
+        const area = player.querySelector('div.ytp-right-controls');
         if (!area) {
             return false;
         }
@@ -108,13 +122,13 @@ function main(app, common) {
         if (!fullerscreen_edu) {
             return false;
         }
-
+        console.log('detected');
         clearInterval(detect_interval);
 
         mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
         mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
 
-        area.appendChild(button);
+        area.appendChild(pin_button);
 
         loadSettings();
     }, 200);
