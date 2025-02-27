@@ -84,37 +84,37 @@ function main(app, common) {
     const detect_interval = setInterval(() => {
         player = app.querySelector('div#movie_player');
         if (!player) {
-            return false;
+            return;
         }
 
         const area = player.querySelector('div.ytp-right-controls');
         if (!area) {
-            return false;
+            return;
         }
 
         panel_top = player.querySelector('div.ytp-chrome-top');
         if (!panel_top) {
-            return false;
+            return;
         }
 
         gradient_top = player.querySelector('div.ytp-gradient-top');
         if (!gradient_top) {
-            return false;
+            return;
         }
 
         panel_bottom = player.querySelector('div.ytp-chrome-bottom');
         if (!panel_bottom) {
-            return false;
+            return;
         }
 
         gradient_bottom = player.querySelector('div.ytp-gradient-bottom');
         if (!gradient_bottom) {
-            return false;
+            return;
         }
 
         heatmap = player.querySelector('div.ytp-heat-map-container');
         if (!heatmap) {
-            return false;
+            return;
         }
 
         clearInterval(detect_interval);
