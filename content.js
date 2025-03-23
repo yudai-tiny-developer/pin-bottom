@@ -81,11 +81,12 @@ function main(app, common) {
 
     chrome.runtime.onMessage.addListener(shortcut_command);
 
-    const detect_interval = setInterval(() => {
-        player = app.querySelector('div#movie_player');
-        if (!player) {
+    setInterval(() => {
+        const player_c = app.querySelector('div#movie_player');
+        if (!player_c || player_c === player) {
             return;
         }
+        player = player_c;
 
         const area = player.querySelector('div.ytp-right-controls');
         if (!area) {
@@ -117,13 +118,11 @@ function main(app, common) {
             return;
         }
 
-        clearInterval(detect_interval);
-
         mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
         mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
         fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
         loadSettings();
-    }, 500);
+    }, 1000);
 }
