@@ -50,10 +50,14 @@ function main(app, common) {
         clearInterval(pin_interval);
     }
 
-    function create_button() {
+    function create_button(new_style) {
         const button = document.createElement('button');
         button.classList.add('_pin_bottom_button', 'ytp-button');
-        button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
+        if (new_style) {
+            button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 50%; height: 50%;"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
+        } else {
+            button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
+        }
         button.addEventListener('click', shortcut_command);
         return button;
     }
@@ -63,8 +67,6 @@ function main(app, common) {
         chrome.storage.local.set({ pin: pin });
     };
 
-    const pin_button = create_button();
-
     let settings;
     let player;
     let panel_top;
@@ -72,6 +74,7 @@ function main(app, common) {
     let panel_bottom;
     let gradient_bottom;
     let heatmap;
+    let pin_button;
     let fullerscreen_edu;
     let mousemove0;
     let mousemove1;
@@ -118,6 +121,8 @@ function main(app, common) {
         }
 
         clearInterval(detect_interval);
+
+        pin_button = create_button(getComputedStyle(area).display === 'flex');
 
         mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
         mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
