@@ -62,6 +62,13 @@ function main(app, common) {
         return button;
     }
 
+    function video_instance() {
+        if (!video?.parentNode && player) {
+            video = player.querySelector('video.html5-main-video');
+        }
+        return video;
+    }
+
     const shortcut_command = () => {
         pin ? off() : on();
         chrome.storage.local.set({ pin: pin });
@@ -69,6 +76,7 @@ function main(app, common) {
 
     let settings;
     let player;
+    let video;
     let panel_top;
     let gradient_top;
     let panel_bottom;
@@ -130,5 +138,20 @@ function main(app, common) {
         area.appendChild(pin_button);
 
         loadSettings();
+
+        setInterval(() => {
+            const video = video_instance();
+            if (pin) {
+                if (!video.style.height.startsWith('calc')) {
+                    prev_height = video.style.height;
+                    video.style.height = `calc(${Math.min(player.offsetHeight - panel_bottom.offsetHeight, video.offsetHeight)}px)`;
+                }
+            } else {
+                if (prev_height) {
+                    video.style.height = prev_height;
+                    prev_height = undefined;
+                }
+            }
+        }, 500);
     }, 500);
 }
