@@ -89,6 +89,7 @@ function main(app, common) {
     let pin;
     let pin_interval;
     let mousemove_event_toggle;
+    let prev_height;
 
     chrome.runtime.onMessage.addListener(shortcut_command);
 
@@ -152,6 +153,6 @@ function main(app, common) {
                     prev_height = undefined;
                 }
             }
-        }, 500);
+        }, 250);
     }, 500);
 }
