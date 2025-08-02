@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Pin YouTube Control",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "description": "__MSG_appDesc__",
     "default_locale": "en",
     "icons": {
@@ -37,6 +37,13 @@
             ]
         }
     ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "options_ui": {
+        "page": "popup.html",
+        "open_in_tab": true
+    },
     "permissions": [
         "storage"
     ],

@@ -62,6 +62,13 @@ function main(app, common) {
         return button;
     }
 
+    function video_instance() {
+        if (!video?.parentNode && player) {
+            video = player.querySelector('video.html5-main-video');
+        }
+        return video;
+    }
+
     const shortcut_command = () => {
         pin ? off() : on();
         chrome.storage.local.set({ pin: pin });
@@ -69,6 +76,7 @@ function main(app, common) {
 
     let settings;
     let player;
+    let video;
     let panel_top;
     let gradient_top;
     let panel_bottom;
@@ -81,6 +89,7 @@ function main(app, common) {
     let pin;
     let pin_interval;
     let mousemove_event_toggle;
+    let prev_height;
 
     chrome.runtime.onMessage.addListener(shortcut_command);
 
@@ -129,6 +138,24 @@ function main(app, common) {
         fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
+        chrome.storage.onChanged.addListener(loadSettings);
+
         loadSettings();
+
+        setInterval(() => {
+            if (settings.space && pin) {
+                const video = video_instance();
+                if (!video.style.height.startsWith('calc')) {
+                    prev_height = video.style.height;
+                    video.style.height = `calc(${Math.min(player.offsetHeight - panel_bottom.offsetHeight, video.offsetHeight)}px)`;
+                }
+            } else {
+                if (prev_height) {
+                    const video = video_instance();
+                    video.style.height = prev_height;
+                    prev_height = undefined;
+                }
+            }
+        }, 250);
     }, 500);
 }
