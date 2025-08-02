@@ -138,17 +138,20 @@ function main(app, common) {
         fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
+        chrome.storage.onChanged.addListener(loadSettings);
+
         loadSettings();
 
         setInterval(() => {
-            const video = video_instance();
-            if (pin) {
+            if (settings.space && pin) {
+                const video = video_instance();
                 if (!video.style.height.startsWith('calc')) {
                     prev_height = video.style.height;
                     video.style.height = `calc(${Math.min(player.offsetHeight - panel_bottom.offsetHeight, video.offsetHeight)}px)`;
                 }
             } else {
                 if (prev_height) {
+                    const video = video_instance();
                     video.style.height = prev_height;
                     prev_height = undefined;
                 }
