@@ -146,7 +146,7 @@ function main(app, common) {
         setInterval(() => {
             if (settings.space && pin) {
                 const video = video_instance();
-                if (!video.style.height.startsWith('calc')) {
+                if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
                     prev_width = video.style.width;
                     prev_height = video.style.height;
 
