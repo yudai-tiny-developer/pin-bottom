@@ -89,6 +89,7 @@ function main(app, common) {
     let pin;
     let pin_interval;
     let mousemove_event_toggle;
+    let prev_width;
     let prev_height;
 
     chrome.runtime.onMessage.addListener(shortcut_command);
@@ -146,13 +147,24 @@ function main(app, common) {
             if (settings.space && pin) {
                 const video = video_instance();
                 if (!video.style.height.startsWith('calc')) {
+                    prev_width = video.style.width;
                     prev_height = video.style.height;
-                    video.style.height = `calc(${Math.min(player.offsetHeight - panel_bottom.offsetHeight, video.offsetHeight)}px)`;
+
+                    const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight);
+                    const new_height = video.offsetHeight - space_height;
+                    const new_width = video.offsetWidth * new_height / video.offsetHeight;
+
+                    video.style.width = `calc(${new_width}px)`;
+                    video.style.height = `calc(${new_height}px)`;
                 }
             } else {
                 if (prev_height) {
                     const video = video_instance();
+
+                    video.style.width = prev_width;
                     video.style.height = prev_height;
+
+                    prev_width = undefined;
                     prev_height = undefined;
                 }
             }
