@@ -89,6 +89,7 @@ function main(app, common) {
     let pin;
     let pin_interval;
     let mousemove_event_toggle;
+    let prev_left;
     let prev_width;
     let prev_height;
 
@@ -147,6 +148,7 @@ function main(app, common) {
             if (settings.space && pin) {
                 const video = video_instance();
                 if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
+                    prev_left = video.style.left;
                     prev_width = video.style.width;
                     prev_height = video.style.height;
 
@@ -163,9 +165,11 @@ function main(app, common) {
                 if (prev_height) {
                     const video = video_instance();
 
+                    video.style.left = prev_left;
                     video.style.width = prev_width;
                     video.style.height = prev_height;
 
+                    prev_left = undefined;
                     prev_width = undefined;
                     prev_height = undefined;
                 }
