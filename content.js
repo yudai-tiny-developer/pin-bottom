@@ -5,10 +5,12 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 });
 
 function main(app, common) {
-    function loadSettings() {
+    function loadSettings(skip) {
         chrome.storage.local.get(common.storage, data => {
             settings = data;
-            update_button();
+            if (!skip) {
+                update_button();
+            }
         });
     }
 
@@ -140,7 +142,7 @@ function main(app, common) {
         fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
-        chrome.storage.onChanged.addListener(loadSettings);
+        chrome.storage.onChanged.addListener(() => loadSettings(true));
 
         loadSettings();
 
