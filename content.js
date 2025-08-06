@@ -30,12 +30,6 @@ function main(app, common) {
         gradient_bottom?.classList.add('_pin_bottom_button_on');
         heatmap?.classList.add('_pin_bottom_button_on');
         fullerscreen_edu?.classList.add('_pin_bottom_button_on');
-
-        clearInterval(pin_interval);
-
-        pin_interval = setInterval(() => {
-            player.dispatchEvent((mousemove_event_toggle = !mousemove_event_toggle) ? mousemove0 : mousemove1);
-        }, 1000);
     }
 
     function off() {
@@ -48,8 +42,6 @@ function main(app, common) {
         gradient_bottom?.classList.remove('_pin_bottom_button_on');
         heatmap?.classList.remove('_pin_bottom_button_on');
         fullerscreen_edu?.classList.remove('_pin_bottom_button_on');
-
-        clearInterval(pin_interval);
     }
 
     function create_button(new_style) {
@@ -86,11 +78,7 @@ function main(app, common) {
     let heatmap;
     let pin_button;
     let fullerscreen_edu;
-    let mousemove0;
-    let mousemove1;
     let pin;
-    let pin_interval;
-    let mousemove_event_toggle;
     let prev_left;
     let prev_width;
     let prev_height;
@@ -137,8 +125,6 @@ function main(app, common) {
 
         pin_button = create_button(getComputedStyle(area).display === 'flex');
 
-        mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
-        mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
         fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
         area.appendChild(pin_button);
 
