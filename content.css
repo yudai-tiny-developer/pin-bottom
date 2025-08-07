@@ -16,6 +16,11 @@ div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-bottom._pin_bottom_but
     opacity: 1 !important;
 }
 
+div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-bottom._pin_bottom_button_on._pin_bottom_button_space {
+    display: none !important;
+    opacity: 0 !important;
+}
+
 div#movie_player:not(.ytp-hide-controls) div.ytp-heat-map-container._pin_bottom_button_on {
     display: block !important;
     opacity: 1 !important;
