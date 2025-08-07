@@ -7,17 +7,47 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 function main(app, common) {
     function loadSettings(skip) {
         chrome.storage.local.get(common.storage, data => {
-            settings = data;
             if (!skip) {
-                update_button();
+                update_button(data.pin);
             }
+
+            clearInterval(space_interval);
+            space_interval = setInterval(() => {
+                if (data.space && data.pin) {
+                    const video = video_instance();
+                    if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
+                        prev_left = video.style.left;
+                        prev_width = video.style.width;
+                        prev_height = video.style.height;
+
+                        const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight);
+                        const new_height = video.offsetHeight - space_height;
+                        const new_width = video.offsetWidth * new_height / video.offsetHeight;
+                        const new_left = Math.max((player.offsetWidth - new_width) / 2.0, 0);
+
+                        video.style.left = `calc(${new_left}px)`;
+                        video.style.width = `calc(${new_width}px)`;
+                        video.style.height = `calc(${new_height}px)`;
+                    }
+                } else {
+                    if (prev_height) {
+                        const video = video_instance();
+
+                        video.style.left = prev_left;
+                        video.style.width = prev_width;
+                        video.style.height = prev_height;
+
+                        prev_left = undefined;
+                        prev_width = undefined;
+                        prev_height = undefined;
+                    }
+                }
+            }, 250);
         });
     }
 
-    function update_button() {
-        if (settings) {
-            settings.pin ?? common.default_pin ? on() : off();
-        }
+    function update_button(pin) {
+        pin ?? common.default_pin ? on() : off();
     }
 
     function on() {
@@ -29,13 +59,8 @@ function main(app, common) {
         panel_bottom?.classList.add('_pin_bottom_button_on');
         gradient_bottom?.classList.add('_pin_bottom_button_on');
         heatmap?.classList.add('_pin_bottom_button_on');
-        fullerscreen_edu?.classList.add('_pin_bottom_button_on');
 
-        clearInterval(pin_interval);
-
-        pin_interval = setInterval(() => {
-            player.dispatchEvent((mousemove_event_toggle = !mousemove_event_toggle) ? mousemove0 : mousemove1);
-        }, 1000);
+        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: pin }));
     }
 
     function off() {
@@ -47,9 +72,8 @@ function main(app, common) {
         panel_bottom?.classList.remove('_pin_bottom_button_on');
         gradient_bottom?.classList.remove('_pin_bottom_button_on');
         heatmap?.classList.remove('_pin_bottom_button_on');
-        fullerscreen_edu?.classList.remove('_pin_bottom_button_on');
 
-        clearInterval(pin_interval);
+        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: pin }));
     }
 
     function create_button(new_style) {
@@ -76,7 +100,6 @@ function main(app, common) {
         chrome.storage.local.set({ pin: pin });
     };
 
-    let settings;
     let player;
     let video;
     let panel_top;
@@ -85,97 +108,65 @@ function main(app, common) {
     let gradient_bottom;
     let heatmap;
     let pin_button;
-    let fullerscreen_edu;
-    let mousemove0;
-    let mousemove1;
     let pin;
-    let pin_interval;
-    let mousemove_event_toggle;
     let prev_left;
     let prev_width;
     let prev_height;
+    let space_interval;
 
     chrome.runtime.onMessage.addListener(shortcut_command);
 
-    const detect_interval = setInterval(() => {
-        player = app.querySelector('div#movie_player');
-        if (!player) {
-            return;
-        }
-
-        const area = player.querySelector('div.ytp-right-controls');
-        if (!area) {
-            return;
-        }
-
-        panel_top = player.querySelector('div.ytp-chrome-top');
-        if (!panel_top) {
-            return;
-        }
-
-        gradient_top = player.querySelector('div.ytp-gradient-top');
-        if (!gradient_top) {
-            return;
-        }
-
-        panel_bottom = player.querySelector('div.ytp-chrome-bottom');
-        if (!panel_bottom) {
-            return;
-        }
-
-        gradient_bottom = player.querySelector('div.ytp-gradient-bottom');
-        if (!gradient_bottom) {
-            return;
-        }
-
-        heatmap = player.querySelector('div.ytp-heat-map-container');
-        if (!heatmap) {
-            return;
-        }
-
-        clearInterval(detect_interval);
-
-        pin_button = create_button(getComputedStyle(area).display === 'flex');
-
-        mousemove0 = new MouseEvent('mousemove', { target: player, clientX: 0 });
-        mousemove1 = new MouseEvent('mousemove', { target: player, clientX: 1 });
-        fullerscreen_edu = player.querySelector('button.ytp-fullerscreen-edu-button');
-        area.appendChild(pin_button);
-
-        chrome.storage.onChanged.addListener(() => loadSettings(true));
-
-        loadSettings();
-
-        setInterval(() => {
-            if (settings.space && pin) {
-                const video = video_instance();
-                if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
-                    prev_left = video.style.left;
-                    prev_width = video.style.width;
-                    prev_height = video.style.height;
-
-                    const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight);
-                    const new_height = video.offsetHeight - space_height;
-                    const new_width = video.offsetWidth * new_height / video.offsetHeight;
-                    const new_left = Math.max((player.offsetWidth - new_width) / 2.0, 0);
-
-                    video.style.left = `calc(${new_left}px)`;
-                    video.style.width = `calc(${new_width}px)`;
-                    video.style.height = `calc(${new_height}px)`;
-                }
-            } else {
-                if (prev_height) {
-                    const video = video_instance();
-
-                    video.style.left = prev_left;
-                    video.style.width = prev_width;
-                    video.style.height = prev_height;
-
-                    prev_left = undefined;
-                    prev_width = undefined;
-                    prev_height = undefined;
-                }
+    document.addEventListener('_pin_bottom_init', () => {
+        const detect_interval = setInterval(() => {
+            player = app.querySelector('div#movie_player');
+            if (!player) {
+                return;
             }
-        }, 250);
-    }, 500);
+
+            const area = player.querySelector('div.ytp-right-controls');
+            if (!area) {
+                return;
+            }
+
+            panel_top = player.querySelector('div.ytp-chrome-top');
+            if (!panel_top) {
+                return;
+            }
+
+            gradient_top = player.querySelector('div.ytp-gradient-top');
+            if (!gradient_top) {
+                return;
+            }
+
+            panel_bottom = player.querySelector('div.ytp-chrome-bottom');
+            if (!panel_bottom) {
+                return;
+            }
+
+            gradient_bottom = player.querySelector('div.ytp-gradient-bottom');
+            if (!gradient_bottom) {
+                return;
+            }
+
+            heatmap = player.querySelector('div.ytp-heat-map-container');
+            if (!heatmap) {
+                return;
+            }
+
+            clearInterval(detect_interval);
+
+            pin_button = create_button(getComputedStyle(area).display === 'flex');
+            area.appendChild(pin_button);
+
+            chrome.storage.onChanged.addListener(() => loadSettings(true));
+
+            loadSettings();
+        }, 500);
+    });
+
+    const s = document.createElement('script');
+    s.id = '_pin_bottom';
+    s.src = chrome.runtime.getURL('inject.js');
+    s.onload = () => s.remove();
+    (document.head || document.documentElement).append(s);
 }

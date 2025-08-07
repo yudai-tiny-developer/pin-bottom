@@ -30,7 +30,8 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "common.js"
+                "common.js",
+                "inject.js"
             ],
             "matches": [
                 "https://www.youtube.com/*"
