@@ -13,7 +13,7 @@ function main(app, common) {
 
             clearInterval(space_interval);
             space_interval = setInterval(() => {
-                if (data.space && data.pin) {
+                if (data.space && pin) {
                     const video = video_instance();
                     if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
                         prev_left = video.style.left;
