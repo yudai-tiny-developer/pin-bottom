@@ -29,6 +29,8 @@ function main(app, common) {
                         video.style.width = `calc(${new_width}px)`;
                         video.style.height = `calc(${new_height}px)`;
                     }
+
+                    gradient_bottom?.classList.add('_pin_bottom_button_space');
                 } else {
                     if (prev_height) {
                         const video = video_instance();
@@ -41,6 +43,8 @@ function main(app, common) {
                         prev_width = undefined;
                         prev_height = undefined;
                     }
+
+                    gradient_bottom?.classList.remove('_pin_bottom_button_space');
                 }
             }, 250);
         });
