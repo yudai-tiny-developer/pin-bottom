@@ -7,13 +7,17 @@ import(chrome.runtime.getURL('common.js')).then(common => {
 function main(app, common) {
     function loadSettings(skip) {
         chrome.storage.local.get(common.storage, data => {
+            const initial_pin = common.value(data.pin, common.default_pin);
+            const space = common.value(data.space, common.default_space);
+            const overlays = common.value(data.overlays, common.default_overlays);
+
             if (!skip) {
-                update_button(data.pin);
+                update_button(initial_pin);
             }
 
             clearInterval(space_interval);
             space_interval = setInterval(() => {
-                if (data.space && pin) {
+                if (space && current_pin) {
                     const video = video_instance();
                     if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
                         prev_left = video.style.left;
@@ -47,6 +51,12 @@ function main(app, common) {
                     gradient_bottom?.classList.remove('_pin_bottom_button_space');
                 }
             }, 250);
+
+            if (overlays) {
+                overlays_container?.classList.add('_pin_bottom_hide_overlays');
+            } else {
+                overlays_container?.classList.remove('_pin_bottom_hide_overlays');
+            }
         });
     }
 
@@ -55,29 +65,27 @@ function main(app, common) {
     }
 
     function on() {
-        pin = true;
+        current_pin = true;
 
         pin_button.classList.add('_pin_bottom_button_on');
-        panel_top?.classList.add('_pin_bottom_button_on');
-        gradient_top?.classList.add('_pin_bottom_button_on');
+        overlays_container?.classList.add('_pin_bottom_button_on');
         panel_bottom?.classList.add('_pin_bottom_button_on');
         gradient_bottom?.classList.add('_pin_bottom_button_on');
         heatmap?.classList.add('_pin_bottom_button_on');
 
-        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: pin }));
+        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
     function off() {
-        pin = false;
+        current_pin = false;
 
         pin_button.classList.remove('_pin_bottom_button_on');
-        panel_top?.classList.remove('_pin_bottom_button_on');
-        gradient_top?.classList.remove('_pin_bottom_button_on');
+        overlays_container?.classList.remove('_pin_bottom_button_on');
         panel_bottom?.classList.remove('_pin_bottom_button_on');
         gradient_bottom?.classList.remove('_pin_bottom_button_on');
         heatmap?.classList.remove('_pin_bottom_button_on');
 
-        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: pin }));
+        document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
     function create_button(new_style) {
@@ -100,19 +108,18 @@ function main(app, common) {
     }
 
     const shortcut_command = () => {
-        pin ? off() : on();
-        chrome.storage.local.set({ pin: pin });
+        current_pin ? off() : on();
+        chrome.storage.local.set({ pin: current_pin });
     };
 
     let player;
     let video;
-    let panel_top;
-    let gradient_top;
+    let overlays_container;
     let panel_bottom;
     let gradient_bottom;
     let heatmap;
     let pin_button;
-    let pin;
+    let current_pin;
     let prev_left;
     let prev_width;
     let prev_height;
@@ -132,13 +139,8 @@ function main(app, common) {
                 return;
             }
 
-            panel_top = player.querySelector('div.ytp-chrome-top');
-            if (!panel_top) {
-                return;
-            }
-
-            gradient_top = player.querySelector('div.ytp-gradient-top');
-            if (!gradient_top) {
+            overlays_container = player.querySelector('div.ytp-overlays-container');
+            if (!overlays_container) {
                 return;
             }
 
