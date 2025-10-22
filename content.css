@@ -25,3 +25,7 @@ div#movie_player:not(.ytp-hide-controls) div.ytp-heat-map-container._pin_bottom_
     display: block !important;
     opacity: 1 !important;
 }
+
+div.ytp-overlays-container._pin_bottom_button_on._pin_bottom_hide_overlays {
+    display: none !important;
+}
