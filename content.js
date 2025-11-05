@@ -54,8 +54,10 @@ function main(app, common) {
 
             if (overlays) {
                 overlays_container?.classList.add('_pin_bottom_hide_overlays');
+                gradient_top?.classList.add('_pin_bottom_hide_overlays');
             } else {
                 overlays_container?.classList.remove('_pin_bottom_hide_overlays');
+                gradient_top?.classList.remove('_pin_bottom_hide_overlays');
             }
         });
     }
@@ -69,6 +71,7 @@ function main(app, common) {
 
         pin_button.classList.add('_pin_bottom_button_on');
         overlays_container?.classList.add('_pin_bottom_button_on');
+        gradient_top?.classList.add('_pin_bottom_button_on');
         panel_bottom?.classList.add('_pin_bottom_button_on');
         gradient_bottom?.classList.add('_pin_bottom_button_on');
         heatmap?.classList.add('_pin_bottom_button_on');
@@ -81,6 +84,7 @@ function main(app, common) {
 
         pin_button.classList.remove('_pin_bottom_button_on');
         overlays_container?.classList.remove('_pin_bottom_button_on');
+        gradient_top?.classList.remove('_pin_bottom_button_on');
         panel_bottom?.classList.remove('_pin_bottom_button_on');
         gradient_bottom?.classList.remove('_pin_bottom_button_on');
         heatmap?.classList.remove('_pin_bottom_button_on');
@@ -115,6 +119,7 @@ function main(app, common) {
     let player;
     let video;
     let overlays_container;
+    let gradient_top;
     let panel_bottom;
     let gradient_bottom;
     let heatmap;
@@ -142,6 +147,19 @@ function main(app, common) {
                 }
             }
 
+            overlays_container = player.querySelector('div.ytp-overlays-container'); // new style
+            if (!overlays_container) {
+                overlays_container = player.querySelector('div.ytp-show-cards-title'); // old style
+                if (!overlays_container) {
+                    return;
+                }
+
+                gradient_top = player.querySelector('div.ytp-gradient-top'); // old style
+                if (!gradient_top) {
+                    return;
+                }
+            }
+
             panel_bottom = player.querySelector('div.ytp-chrome-bottom');
             if (!panel_bottom) {
                 return;
@@ -158,8 +176,6 @@ function main(app, common) {
             }
 
             clearInterval(detect_interval);
-
-            overlays_container = player.querySelector('div.ytp-overlays-container');
 
             pin_button = create_button(getComputedStyle(area).display === 'flex');
             area.appendChild(pin_button);
