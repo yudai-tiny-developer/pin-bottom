@@ -134,14 +134,12 @@ function main(app, common) {
                 return;
             }
 
-            const area = player.querySelector('div.ytp-right-controls');
+            let area = player.querySelector('div.ytp-right-controls-left'); // new style
             if (!area) {
-                return;
-            }
-
-            overlays_container = player.querySelector('div.ytp-overlays-container');
-            if (!overlays_container) {
-                return;
+                area = player.querySelector('div.ytp-right-controls'); // old style
+                if (!area) {
+                    return;
+                }
             }
 
             panel_bottom = player.querySelector('div.ytp-chrome-bottom');
@@ -160,6 +158,8 @@ function main(app, common) {
             }
 
             clearInterval(detect_interval);
+
+            overlays_container = player.querySelector('div.ytp-overlays-container');
 
             pin_button = create_button(getComputedStyle(area).display === 'flex');
             area.appendChild(pin_button);
