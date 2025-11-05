@@ -29,3 +29,11 @@ div#movie_player:not(.ytp-hide-controls) div.ytp-heat-map-container._pin_bottom_
 div.ytp-overlays-container._pin_bottom_button_on._pin_bottom_hide_overlays {
     display: none !important;
 }
+
+div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays {
+    display: none !important;
+}
+
+div.ytp-gradient-top._pin_bottom_button_on._pin_bottom_hide_overlays {
+    display: none !important;
+}
