@@ -24,7 +24,7 @@ function main(app, common) {
                         prev_width = video.style.width;
                         prev_height = video.style.height;
 
-                        const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight);
+                        const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight) + progress_bar.offsetHeight;
                         const new_height = video.offsetHeight - space_height;
                         const new_width = video.offsetWidth * new_height / video.offsetHeight;
                         const new_left = Math.max((player.offsetWidth - new_width) / 2.0, 0);
@@ -121,6 +121,7 @@ function main(app, common) {
     let overlays_container;
     let gradient_top;
     let panel_bottom;
+    let progress_bar;
     let gradient_bottom;
     let heatmap;
     let pin_button;
@@ -162,6 +163,11 @@ function main(app, common) {
 
             panel_bottom = player.querySelector('div.ytp-chrome-bottom');
             if (!panel_bottom) {
+                return;
+            }
+
+            progress_bar = panel_bottom.querySelector('div.ytp-progress-bar');
+            if (!progress_bar) {
                 return;
             }
 
