@@ -20,5 +20,5 @@
 		});
 
 		document.dispatchEvent(new CustomEvent('_pin_bottom_init'));
-	});
+	}, 500);
 })();
