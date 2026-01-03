@@ -92,10 +92,10 @@ function main(app, common) {
         document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
-    function create_button(new_style) {
+    function create_button(delhi) {
         const button = document.createElement('button');
         button.classList.add('_pin_bottom_button', 'ytp-button');
-        if (new_style) {
+        if (delhi) {
             button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 50%; height: 50%;"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
         } else {
             button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
@@ -183,7 +183,9 @@ function main(app, common) {
 
             clearInterval(detect_interval);
 
-            pin_button = create_button(getComputedStyle(area).display === 'flex');
+            const delhi = player.classList.contains('ytp-delhi-modern');
+
+            pin_button = create_button(delhi);
             area.appendChild(pin_button);
 
             chrome.storage.onChanged.addListener(() => loadSettings(true));
