@@ -37,3 +37,7 @@ div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays {
 div.ytp-gradient-top._pin_bottom_button_on._pin_bottom_hide_overlays {
     display: none !important;
 }
+
+div#movie_player:not(.ytp-hide-controls) ._pin_bottom_button_on .ytp-autohide-fade-transition {
+    transition-delay: 1s !important;
+}
