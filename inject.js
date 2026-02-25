@@ -3,7 +3,7 @@
 	let pin_interval;
 
 	const detect_interval = setInterval(() => {
-		player = document.body.querySelector('div#movie_player');
+		player = document.getElementById("movie_player");
 		if (!player) {
 			return;
 		}

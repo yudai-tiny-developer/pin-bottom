@@ -1,10 +1,10 @@
 import(chrome.runtime.getURL('common.js')).then(common => {
     if (!common.isLiveChat(location.href)) {
-        main(document.querySelector('ytd-app') ?? document.body, common);
+        main(common);
     }
 });
 
-function main(app, common) {
+function main(common) {
     function loadSettings(skip) {
         chrome.storage.local.get(common.storage, data => {
             const initial_pin = common.value(data.pin, common.default_pin);
@@ -135,7 +135,7 @@ function main(app, common) {
 
     document.addEventListener('_pin_bottom_init', () => {
         const detect_interval = setInterval(() => {
-            player = app.querySelector('div#movie_player');
+            player = document.getElementById("movie_player");
             if (!player) {
                 return;
             }
