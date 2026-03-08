@@ -39,5 +39,26 @@ div.ytp-gradient-top._pin_bottom_button_on._pin_bottom_hide_overlays {
 }
 
 div#movie_player:not(.ytp-hide-controls) ._pin_bottom_button_on .ytp-autohide-fade-transition {
-    transition-delay: 1s !important;
+    transition: none !important;
+    opacity: 1 !important
+}
+
+div#movie_player.ytp-fullscreen:not(.ytp-hide-controls) ._pin_bottom_button_on .ytp-fullscreen-metadata {
+    transition: none !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+div#movie_player.ytp-fullscreen:not(.ytp-hide-controls) ._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-fullscreen-metadata {
+    display: none !important;
+}
+
+div#movie_player.ytp-fullscreen:not(.ytp-hide-controls) ._pin_bottom_button_on .ytp-fullscreen-quick-actions {
+    transition: none !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+div#movie_player.ytp-fullscreen:not(.ytp-hide-controls) ._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-fullscreen-quick-actions {
+    display: none !important;
 }

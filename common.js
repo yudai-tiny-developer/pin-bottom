@@ -6,7 +6,7 @@ export const storage = [
 
 export const default_pin = false;
 export const default_space = false;
-export const default_overlays = false;
+export const default_overlays = true;
 
 export function value(value, defaultValue) {
     return value === undefined ? defaultValue : value;
