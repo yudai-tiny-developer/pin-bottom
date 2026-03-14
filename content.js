@@ -34,7 +34,7 @@ function main(common) {
                         video.style.height = `calc(${new_height}px)`;
                     }
 
-                    gradient_bottom?.classList.add('_pin_bottom_button_space');
+                    player?.classList.add('_pin_bottom_button_space');
                 } else {
                     if (prev_height) {
                         const video = video_instance();
@@ -48,16 +48,14 @@ function main(common) {
                         prev_height = undefined;
                     }
 
-                    gradient_bottom?.classList.remove('_pin_bottom_button_space');
+                    player?.classList.remove('_pin_bottom_button_space');
                 }
             }, 250);
 
             if (overlays) {
-                overlays_container?.classList.add('_pin_bottom_hide_overlays');
-                gradient_top?.classList.add('_pin_bottom_hide_overlays');
+                player?.classList.add('_pin_bottom_hide_overlays');
             } else {
-                overlays_container?.classList.remove('_pin_bottom_hide_overlays');
-                gradient_top?.classList.remove('_pin_bottom_hide_overlays');
+                player?.classList.remove('_pin_bottom_hide_overlays');
             }
         });
     }
@@ -68,27 +66,13 @@ function main(common) {
 
     function on() {
         current_pin = true;
-
-        pin_button.classList.add('_pin_bottom_button_on');
-        overlays_container?.classList.add('_pin_bottom_button_on');
-        gradient_top?.classList.add('_pin_bottom_button_on');
-        panel_bottom?.classList.add('_pin_bottom_button_on');
-        gradient_bottom?.classList.add('_pin_bottom_button_on');
-        heatmap?.classList.add('_pin_bottom_button_on');
-
+        player?.classList.add('_pin_bottom_button_on');
         document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
     function off() {
         current_pin = false;
-
-        pin_button.classList.remove('_pin_bottom_button_on');
-        overlays_container?.classList.remove('_pin_bottom_button_on');
-        gradient_top?.classList.remove('_pin_bottom_button_on');
-        panel_bottom?.classList.remove('_pin_bottom_button_on');
-        gradient_bottom?.classList.remove('_pin_bottom_button_on');
-        heatmap?.classList.remove('_pin_bottom_button_on');
-
+        player?.classList.remove('_pin_bottom_button_on');
         document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
@@ -118,12 +102,7 @@ function main(common) {
 
     let player;
     let video;
-    let overlays_container;
-    let gradient_top;
     let panel_bottom;
-    let progress_bar;
-    let gradient_bottom;
-    let heatmap;
     let pin_button;
     let current_pin;
     let prev_left;
@@ -148,36 +127,8 @@ function main(common) {
                 }
             }
 
-            overlays_container = player.querySelector('div.ytp-overlays-container'); // new style
-            if (!overlays_container) {
-                overlays_container = player.querySelector('div.ytp-show-cards-title'); // old style
-                if (!overlays_container) {
-                    return;
-                }
-
-                gradient_top = player.querySelector('div.ytp-gradient-top'); // old style
-                if (!gradient_top) {
-                    return;
-                }
-            }
-
             panel_bottom = player.querySelector('div.ytp-chrome-bottom');
             if (!panel_bottom) {
-                return;
-            }
-
-            progress_bar = panel_bottom.querySelector('div.ytp-progress-bar');
-            if (!progress_bar) {
-                return;
-            }
-
-            gradient_bottom = player.querySelector('div.ytp-gradient-bottom');
-            if (!gradient_bottom) {
-                return;
-            }
-
-            heatmap = player.querySelector('div.ytp-heat-map-container');
-            if (!heatmap) {
                 return;
             }
 

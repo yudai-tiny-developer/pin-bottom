@@ -1,140 +1,146 @@
-button._pin_bottom_button {
+div#movie_player:not(.ytp-hide-controls) button._pin_bottom_button {
     fill: #eee !important;
 }
 
-button._pin_bottom_button._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on button._pin_bottom_button {
     fill: #ff8983 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-chrome-bottom._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-chrome-bottom {
     display: block !important;
     opacity: 1 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-bottom._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-gradient-bottom {
     display: block !important;
     opacity: 1 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-bottom._pin_bottom_button_on._pin_bottom_button_space {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_button_space div.ytp-gradient-bottom {
     display: none !important;
     opacity: 0 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-heat-map-container._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-heat-map-container {
     display: block !important;
     opacity: 1 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) ._pin_bottom_button_on .ytp-autohide-fade-transition {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-autohide-fade-transition {
     transition: none !important;
     opacity: 1 !important
 }
 
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on.ytp-fullscreen .ytp-fullscreen-grid {
+    transition: none !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
 /* ytp-overlays-container */
-div#movie_player:not(.ytp-hide-controls) div.ytp-overlays-container._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-overlays-container {
     transition: none !important;
     opacity: 1 !important;
     bottom: 80px !important;
     display: block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-overlays-container._pin_bottom_button_on._pin_bottom_hide_overlays {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-overlays-container {
     display: none !important;
 }
 
 /* ytp-show-cards-title */
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title {
     transition: none !important;
     opacity: 1 !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on .ytp-title-channel {
-    transition: none !important;
-    opacity: 1 !important;
-    display: flex !important;
-}
-
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-title-channel {
-    display: none !important;
-}
-
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on .ytp-title {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title .ytp-title-channel {
     transition: none !important;
     opacity: 1 !important;
     display: flex !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-title {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-show-cards-title .ytp-title-channel {
     display: none !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on .ytp-chrome-top-buttons .ytp-share-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title .ytp-title {
+    transition: none !important;
+    opacity: 1 !important;
+    display: flex !important;
+}
+
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-show-cards-title .ytp-title {
+    display: none !important;
+}
+
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-share-button-visible {
     transition: none !important;
     opacity: 1 !important;
     display: inline-block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-chrome-top-buttons .ytp-share-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-share-button-visible {
     display: none !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on .ytp-chrome-top-buttons .ytp-copylink-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-copylink-button-visible {
     transition: none !important;
     opacity: 1 !important;
     display: inline-block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-chrome-top-buttons .ytp-copylink-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-copylink-button-visible {
     display: none !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on .ytp-chrome-top-buttons .ytp-overflow-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-overflow-button-visible {
     transition: none !important;
     opacity: 1 !important;
     display: inline-block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-show-cards-title._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-chrome-top-buttons .ytp-overflow-button-visible {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-show-cards-title .ytp-chrome-top-buttons .ytp-overflow-button-visible {
     display: none !important;
 }
 
 /* ytp-gradient-top */
-div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-top._pin_bottom_button_on {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-gradient-top {
     transition: none !important;
     opacity: 1 !important;
     display: block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls) div.ytp-gradient-top._pin_bottom_button_on._pin_bottom_hide_overlays {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-gradient-top {
     display: none !important;
 }
 
 /* ytp-fullscreen-metadata */
-div#movie_player:not(.ytp-hide-controls).ytp-fullscreen ._pin_bottom_button_on .ytp-fullscreen-metadata {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on.ytp-fullscreen .ytp-fullscreen-metadata {
     transition: none !important;
     opacity: 1 !important;
     display: block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls).ytp-fullscreen ._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-fullscreen-metadata {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays.ytp-fullscreen .ytp-fullscreen-metadata {
     display: none !important;
 }
 
 /* ytp-fullscreen-quick-actions */
-div#movie_player:not(.ytp-hide-controls).ytp-fullscreen ._pin_bottom_button_on .ytp-fullscreen-quick-actions {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on.ytp-fullscreen .ytp-fullscreen-quick-actions {
     transition: none !important;
     opacity: 1 !important;
     display: block !important;
 }
 
-div#movie_player:not(.ytp-hide-controls).ytp-fullscreen ._pin_bottom_button_on._pin_bottom_hide_overlays .ytp-fullscreen-quick-actions {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays.ytp-fullscreen .ytp-fullscreen-quick-actions {
     display: none !important;
 }
 
 /* ytp-player-content */
-div#movie_player:not(.ytp-hide-controls):has(._pin_bottom_button_on) .ytp-ypc-player-content,
-div#movie_player:not(.ytp-hide-controls):has(._pin_bottom_button_on) .ytp-player-content {
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-ypc-player-content,
+div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-player-content {
     transition: none !important;
     bottom: 53px !important
 }
