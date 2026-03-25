@@ -19,12 +19,19 @@ function main(common) {
             space_interval = setInterval(() => {
                 if (space && current_pin) {
                     const video = video_instance();
-                    if (!video.style.height.startsWith('calc') && panel_bottom.offsetHeight > 0) {
+                    if (!video.style.height.startsWith('calc') && panel.offsetHeight > 0) {
                         prev_left = video.style.left;
                         prev_width = video.style.width;
                         prev_height = video.style.height;
 
-                        const space_height = Math.min(Math.max(panel_bottom.offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), panel_bottom.offsetHeight);
+                        let offsetHeight;
+                        if (video.hasAttribute('playsinline')) { // new-style YouTube embedded player
+                            offsetHeight = panel.offsetHeight * 2;
+                        } else {
+                            offsetHeight = panel.offsetHeight;
+                        }
+
+                        const space_height = Math.min(Math.max(offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), offsetHeight);
                         const new_height = video.offsetHeight - space_height;
                         const new_width = video.offsetWidth * new_height / video.offsetHeight;
                         const new_left = Math.max((player.offsetWidth - new_width) / 2.0, 0);
@@ -67,25 +74,37 @@ function main(common) {
     function on() {
         current_pin = true;
         player?.classList.add('_pin_bottom_button_on');
+        pin_button?.classList.add('_pin_bottom_button_on');
         document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
     function off() {
         current_pin = false;
         player?.classList.remove('_pin_bottom_button_on');
+        pin_button?.classList.remove('_pin_bottom_button_on');
         document.dispatchEvent(new CustomEvent('_pin_bottom_update', { detail: current_pin }));
     }
 
-    function create_button(delhi) {
+    function create_button() {
         const button = document.createElement('button');
         button.classList.add('_pin_bottom_button', 'ytp-button');
-        if (delhi) {
-            button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 50%; height: 50%;"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
-        } else {
-            button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%;" transform="scale(0.5 0.5)"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
-        }
+        button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 50%; height: 50%;"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
         button.addEventListener('click', shortcut_command);
         return button;
+    }
+
+    function append_button() {
+        if (pin_button) {
+            const action_menu = document.getElementsByTagName('player-fullscreen-action-menu')?.[0];
+            if (action_menu) { // new-style YouTube embedded player
+                pin_button.style.width = '40px';
+                pin_button.style.height = '40px';
+            } else {
+                pin_button.style.width = undefined;
+                pin_button.style.height = undefined;
+            }
+            area.appendChild(pin_button);
+        }
     }
 
     function video_instance() {
@@ -102,7 +121,7 @@ function main(common) {
 
     let player;
     let video;
-    let panel_bottom;
+    let panel;
     let pin_button;
     let current_pin;
     let prev_left;
@@ -115,29 +134,27 @@ function main(common) {
     document.addEventListener('_pin_bottom_init', () => {
         const detect_interval = setInterval(() => {
             player = document.getElementById("movie_player");
-            if (!player) {
-                return;
-            }
+            if (!player) return;
 
-            let area = player.querySelector('div.ytp-right-controls-left'); // new style
-            if (!area) {
-                area = player.querySelector('div.ytp-right-controls'); // old style
-                if (!area) {
-                    return;
-                }
-            }
+            const action_menu = document.getElementsByTagName('player-fullscreen-action-menu')?.[0];
+            if (action_menu) { // new-style YouTube embedded player
+                area = action_menu.querySelector('div.quick-actions-wrapper');
+                if (!area) return;
 
-            panel_bottom = player.querySelector('div.ytp-chrome-bottom');
-            if (!panel_bottom) {
-                return;
+                panel = action_menu.querySelector('div.fullscreen-watch-next-entrypoint-wrapper');
+                if (!panel) return;
+            } else {
+                area = player.querySelector('div.ytp-right-controls-left');
+                if (!area) return;
+
+                panel = player.querySelector('div.ytp-chrome-bottom');
+                if (!panel) return;
             }
 
             clearInterval(detect_interval);
 
-            const delhi = player.classList.contains('ytp-delhi-modern');
-
-            pin_button = create_button(delhi);
-            area.appendChild(pin_button);
+            pin_button = create_button();
+            append_button();
 
             chrome.storage.onChanged.addListener(() => loadSettings(true));
 
