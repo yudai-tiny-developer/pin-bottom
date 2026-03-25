@@ -1,16 +1,18 @@
-div#movie_player:not(.ytp-hide-controls) button._pin_bottom_button {
+button._pin_bottom_button {
     fill: #eee !important;
 }
 
-div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on button._pin_bottom_button {
+button._pin_bottom_button._pin_bottom_button_on {
     fill: #ff8983 !important;
 }
 
+/* ytp-chrome-bottom  */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-chrome-bottom {
     display: block !important;
     opacity: 1 !important;
 }
 
+/* ytp-gradient-bottom */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-gradient-bottom {
     display: block !important;
     opacity: 1 !important;
@@ -21,16 +23,19 @@ div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_butto
     opacity: 0 !important;
 }
 
+/* ytp-heat-map-container */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-heat-map-container {
     display: block !important;
     opacity: 1 !important;
 }
 
+/* ytp-autohide-fade-transition */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-autohide-fade-transition {
     transition: none !important;
     opacity: 1 !important
 }
 
+/* ytp-fullscreen-grid */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on.ytp-fullscreen .ytp-fullscreen-grid {
     transition: none !important;
     opacity: 1 !important;
@@ -143,4 +148,17 @@ div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-ypc-player-c
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on .ytp-player-content {
     transition: none !important;
     bottom: 53px !important
+}
+
+/* embedded player */
+body:has(._pin_bottom_button_on) div.player-controls-content {
+    visibility: visible !important;
+}
+
+body:has(._pin_bottom_button_on) player-middle-controls {
+    visibility: hidden !important;
+}
+
+body:has(._pin_bottom_hide_overlays) embedded-player-video-details {
+    visibility: hidden !important;
 }

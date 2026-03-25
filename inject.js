@@ -4,9 +4,7 @@
 
 	const detect_interval = setInterval(() => {
 		player = document.getElementById("movie_player");
-		if (!player) {
-			return;
-		}
+		if (!player) return;
 
 		clearInterval(detect_interval);
 
