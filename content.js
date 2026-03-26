@@ -19,14 +19,14 @@ function main(common) {
             space_interval = setInterval(() => {
                 if (space && current_pin) {
                     const video = video_instance();
-                    if (!video.style.height.startsWith('calc') && panel.offsetHeight > 0) {
+                    if (!video.style.height.startsWith('calc') && area.offsetHeight > 0) {
                         prev_left = video.style.left;
                         prev_width = video.style.width;
                         prev_height = video.style.height;
 
                         let offsetHeight;
                         if (video.hasAttribute('playsinline')) { // new-style YouTube embedded player
-                            offsetHeight = panel.offsetHeight * 2;
+                            offsetHeight = area.offsetHeight * 2;
                         } else {
                             offsetHeight = panel.offsetHeight;
                         }
