@@ -159,6 +159,10 @@ body:has(._pin_bottom_button_on) player-middle-controls {
     visibility: hidden !important;
 }
 
-body:has(._pin_bottom_hide_overlays) embedded-player-video-details {
+body:has(._pin_bottom_button_on._pin_bottom_hide_overlays) embedded-player-video-details {
+    visibility: hidden !important;
+}
+
+body:has(._pin_bottom_button_on._pin_bottom_hide_overlays) .player-controls-background {
     visibility: hidden !important;
 }
