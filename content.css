@@ -117,17 +117,6 @@ div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_
     display: none !important;
 }
 
-/* ytp-gradient-top */
-div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on div.ytp-gradient-top {
-    transition: none !important;
-    opacity: 1 !important;
-    display: block !important;
-}
-
-div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on._pin_bottom_hide_overlays div.ytp-gradient-top {
-    display: none !important;
-}
-
 /* ytp-fullscreen-metadata */
 div#movie_player:not(.ytp-hide-controls)._pin_bottom_button_on.ytp-fullscreen .ytp-fullscreen-metadata {
     transition: none !important;
