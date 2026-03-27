@@ -80,7 +80,7 @@ function main(common) {
                 if (!area) return;
                 if (area.offsetHeight === 0) return;
 
-                const video = player.querySelector('video.html5-main-video');
+                const video = video_instance();
                 if (!video) return;
                 if (video.style.height.startsWith('calc')) return;
 
@@ -104,7 +104,7 @@ function main(common) {
             } else {
                 if (!prev_height) return;
 
-                const video = player.querySelector('video.html5-main-video');
+                const video = video_instance();
                 if (!video) return;
 
                 Object.assign(video.style, {
@@ -130,6 +130,13 @@ function main(common) {
         }
     }
 
+    function video_instance() {
+        if (!video_cache?.parentNode && player) {
+            video_cache = player.querySelector('video.html5-main-video');
+        }
+        return video_cache;
+    }
+
     function shortcut_command() {
         current_pin ? off() : on();
         chrome.storage.local.set({ pin: current_pin });
@@ -138,6 +145,7 @@ function main(common) {
     const pin_button = create_button();
 
     let player;
+    let video_cache;
     let area;
     let current_pin;
     let prev_left;
@@ -155,10 +163,11 @@ function main(common) {
 
             clearInterval(detect_interval);
 
+            video_instance();
             update_button();
-            chrome.runtime.onMessage.addListener(shortcut_command);
             chrome.storage.onChanged.addListener(() => loadSettings(false));
             loadSettings(true);
+            chrome.runtime.onMessage.addListener(shortcut_command);
         }, 500);
     });
 
