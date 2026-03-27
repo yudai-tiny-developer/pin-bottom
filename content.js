@@ -35,15 +35,19 @@ function main(common) {
     function create_button() {
         const button = document.createElement('button');
         button.classList.add('_pin_bottom_button', 'ytp-button');
-        button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 50%; height: 50%;"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
+        button.innerHTML = '<svg viewBox="0 0 512 512" style="width: 100%; height: 100%; padding: 0; transform: scale(0.5);"><g><polygon points="419.286,301.002 416.907,248.852 357.473,219.867 337.487,55.355 369.774,38.438 369.774,0 286.751,0 225.249,0 142.219,0 142.219,38.438 174.509,55.355 154.52,219.867 95.096,248.852 92.714,301.002 256.001,301.002"></polygon><polygon points="231.399,465.871 254.464,512 277.522,465.871 277.522,315.194 231.399,315.194"></polygon></g></svg>';
         button.addEventListener('click', shortcut_command);
         return button;
     }
 
-    function update_button() {
-        clearInterval(append_button_interval);
-        append_button_interval = setInterval(() => {
+    function append_button() {
+        function append_button_internal() {
             if (common.isEmbed(location.href)) {
+                const container = document.getElementsByTagName('player-fullscreen-action-menu')[0]?.querySelector('div.quick-actions-wrapper');
+                if (!container) return;
+
+                panel = container;
+
                 if (pin_button.style.width !== '40px') {
                     Object.assign(pin_button.style, {
                         width: '40px',
@@ -51,12 +55,16 @@ function main(common) {
                     });
                 }
 
-                const container = document.getElementsByTagName('player-fullscreen-action-menu')[0]?.querySelector('div.quick-actions-wrapper');
-                if (container && !container.contains(pin_button)) {
+                if (!container.contains(pin_button)) {
                     container.appendChild(pin_button);
-                    area = container;
                 }
             } else {
+                const area = player.querySelector('div.ytp-right-controls-right');
+                if (!area) return;
+
+                panel = player.querySelector('div.ytp-chrome-bottom');
+                if (!panel) return;
+
                 if (pin_button.style.width !== undefined) {
                     Object.assign(pin_button.style, {
                         width: undefined,
@@ -64,21 +72,23 @@ function main(common) {
                     });
                 }
 
-                const container = player.querySelector('div.ytp-right-controls-right');
-                if (container && !container.contains(pin_button)) {
-                    container.appendChild(pin_button);
-                    area = player.querySelector('div.ytp-chrome-bottom');
+                if (!area.contains(pin_button)) {
+                    area.appendChild(pin_button);
                 }
             }
-        }, 500);
+        }
+
+        clearInterval(append_button_interval);
+        append_button_interval = setInterval(append_button_internal, 500);
+        append_button_internal();
     }
 
     function update_space(space) {
         clearInterval(space_interval);
         space_interval = setInterval(() => {
             if (space && current_pin) {
-                if (!area) return;
-                if (area.offsetHeight === 0) return;
+                if (!panel) return;
+                if (panel.offsetHeight === 0) return;
 
                 const video = video_instance();
                 if (!video) return;
@@ -88,7 +98,7 @@ function main(common) {
                 prev_width = video.style.width;
                 prev_height = video.style.height;
 
-                const offsetHeight = common.isEmbed(location.href) ? area.offsetHeight * 2 : area.offsetHeight;
+                const offsetHeight = common.isEmbed(location.href) ? panel.offsetHeight * 2 : panel.offsetHeight;
                 const space_height = Math.min(Math.max(offsetHeight - (player.offsetHeight - video.offsetHeight) / 2.0, 0), offsetHeight);
                 const new_height = video.offsetHeight - space_height;
                 const new_width = video.offsetWidth * new_height / video.offsetHeight;
@@ -144,16 +154,16 @@ function main(common) {
 
     const pin_button = create_button();
 
-    let player;
-    let video_cache;
-    let area;
     let current_pin;
     let prev_left;
     let prev_width;
     let prev_height;
+    let player;
+    let video_cache;
+    let panel;
     let detect_interval;
-    let space_interval;
     let append_button_interval;
+    let space_interval;
 
     document.addEventListener('_pin_bottom_init', () => {
         clearInterval(detect_interval);
@@ -164,7 +174,7 @@ function main(common) {
             clearInterval(detect_interval);
 
             video_instance();
-            update_button();
+            append_button();
             chrome.storage.onChanged.addListener(() => loadSettings(false));
             loadSettings(true);
             chrome.runtime.onMessage.addListener(shortcut_command);

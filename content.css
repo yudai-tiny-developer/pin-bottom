@@ -1,9 +1,9 @@
 button._pin_bottom_button {
-    fill: #eee !important;
+    fill: #eee;
 }
 
 button._pin_bottom_button._pin_bottom_button_on {
-    fill: #ff8983 !important;
+    fill: #ff8983;
 }
 
 div#player-controls button._pin_bottom_button {
