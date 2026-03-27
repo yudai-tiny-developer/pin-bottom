@@ -1,9 +1,8 @@
 (() => {
-	let player;
 	let pin_interval;
 
 	const detect_interval = setInterval(() => {
-		player = document.getElementById("movie_player");
+		const player = document.getElementById("movie_player");
 		if (!player) return;
 
 		clearInterval(detect_interval);
@@ -13,7 +12,7 @@
 			if (e.detail) {
 				pin_interval = setInterval(() => {
 					player.wakeUpControls();
-				}, 1000);
+				}, 500);
 			}
 		});
 
