@@ -17,3 +17,9 @@ export function isLiveChat(url) {
         || url.startsWith('https://www.youtube.com/live_chat_replay?')
         ;
 }
+
+export function isEmbed(url) {
+    return url.startsWith('https://www.youtube.com/embed/')
+        || url.startsWith('https://www.youtube-nocookie.com/embed/')
+        ;
+}
