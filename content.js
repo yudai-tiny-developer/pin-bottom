@@ -143,11 +143,13 @@ function main(common) {
     let prev_left;
     let prev_width;
     let prev_height;
+    let detect_interval;
     let space_interval;
     let append_button_interval;
 
     document.addEventListener('_pin_bottom_init', () => {
-        const detect_interval = setInterval(() => {
+        clearInterval(detect_interval);
+        detect_interval = setInterval(() => {
             player = document.getElementById("movie_player");
             if (!player) return;
 
